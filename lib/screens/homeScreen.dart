@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -87,6 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return GestureDetector(
       onTap: (() {
         setState(tap1);
+        final player1 = AudioCache();
+        player1.play('tick1.wav');
       }),
       child: Container(
         decoration: BoxDecoration(
@@ -107,6 +110,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return GestureDetector(
       onTap: ((){
         setState(tap2);
+        final player2 = AudioCache();
+        player2.play('tick2.wav');
       }),
       child: Container(
         decoration: BoxDecoration(
@@ -124,16 +129,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        // color: Colors.black
         ),
       width: double.infinity,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           GestureDetector(
+            onTap: changeClockPopup,
             child: Container(
               width: 100,
-              // color: Colors.amber,
               child: Icon(
                 Icons.settings,
                 size: 40,
@@ -168,6 +172,49 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
+  }
+
+  changeClockPopup(){
+    return showDialog(
+      context: context,
+      builder: (context)=> AlertDialog(
+        title: Text('Change Clock'),
+        content: Container(
+          height: 200,
+          // color: Colors.blue,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                children: [
+                  Text('1'),
+                ],
+              ),
+              TextField(
+                autofocus: true,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.blueGrey ,width: 1),borderRadius: BorderRadius.circular(15),),
+                  hintText: 'P1',
+                  hintStyle: TextStyle(color: Colors.blueGrey.shade300),
+                ),
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(borderSide: const BorderSide(color: Colors.blueGrey ,width: 1),borderRadius: BorderRadius.circular(15),),
+                  hintText: 'Player2 Timer',
+                  hintStyle: TextStyle(color: Colors.blueGrey.shade300),
+                ),
+              )
+            ],
+          ),
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: Navigator.of(context).pop, 
+            child: Text('Done')
+          )
+        ],
+      ));
   }
 
   @override
